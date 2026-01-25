@@ -1,0 +1,22 @@
+/* Cursor tail visuals */
+.cursor-tail {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 9999;
+}
+
+.cursor-dot {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	border-radius: 999px;
+	background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(124, 58, 237, 0.75));
+	box-shadow: 0 10px 30px rgba(124, 58, 237, 0.35);
+	transform: translate(-50%, -50%);
+	will-change: transform, opacity;
+}
+
+@media (pointer: coarse) {
+	.cursor-tail { display: none; }
+}

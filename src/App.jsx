@@ -4,10 +4,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Index from './pages/index.jsx';
 import About from './pages/About.jsx';
 import Navbar from './pages/Navbar.jsx';
+import CursorTail from './CursorTail.jsx';
 function App() {
   return (
     <div>
       <BrowserRouter>
+        <CursorTail />
         {/* <Navbar /> */}
         <Routes>
           <Route path='/' element={<Index />} />

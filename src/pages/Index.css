@@ -70,7 +70,7 @@ body {
   border-radius: 10px;
   border: 1px solid transparent;
   background: transparent;
-  
+
 
   transition: var(--transition);
 }
@@ -231,7 +231,7 @@ body {
   display: block;
   width: 100px;
   height: 4px;
-  margin: 0 auto 30px;
+  margin: 12px auto 30px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   border-radius: 999px;
   box-shadow: 0 6px 20px rgba(124, 58, 237, 0.25);
