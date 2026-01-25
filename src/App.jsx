@@ -1,0 +1,21 @@
+import React from 'react'
+import "./App.css"
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Index from './pages/index.jsx';
+import About from './pages/About.jsx';
+import Navbar from './pages/Navbar.jsx';
+function App() {
+  return (
+    <div>
+      <BrowserRouter>
+        {/* <Navbar /> */}
+        <Routes>
+          <Route path='/' element={<Index />} />
+          <Route path='/about' element={<About />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  )
+}
+
+export default App
