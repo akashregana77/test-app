@@ -1,6 +1,7 @@
 import React from "react";
-import logo from "../assets/logo-light-transparent.png";
 import { Link } from "react-router-dom";
+import logo from "../../assets/logo-light-transparent.png";
+import "./Navbar.css";
 const Navbar = () => {
   return (
     <nav className="navbar">

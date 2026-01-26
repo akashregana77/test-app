@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import Navbar from "./Navbar";
+import Navbar from "../Components/Navbar/Navbar";
 import "./About.css";
 
 function About() {

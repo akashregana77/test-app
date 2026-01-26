@@ -1,6 +1,6 @@
 import React from 'react'
 import "./Index.css"
-import Navbar from "./Navbar";
+import Navbar from "../Components/Navbar/Navbar";
 function Index() {
   const features = [
     { title: "Notes", description: "Capture quick thoughts, ideas, and reminders. Organize with pins and search." },

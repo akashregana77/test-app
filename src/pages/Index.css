@@ -1,17 +1,3 @@
-:root {
-  --bg: #0f172a;
-  --panel: #111827;
-  --card: #111827;
-  --card-border: rgba(255, 255, 255, 0.06);
-  --accent: #7c3aed;
-  --accent-2: #22d3ee;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
-  --shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
-  --radius: 16px;
-  --transition: 200ms ease;
-}
-
 *,
 *::before,
 *::after {
@@ -32,102 +18,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  backdrop-filter: blur(16px);
-  background: rgba(15, 23, 42, 0.65);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 7vw;
-}
-
-.nav-left {
-  font-weight: 700;
-  font-size: 1.2rem;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-}
-.brand-logo {
-  height: 44px;       /* tweak to your liking */
-  width: auto;
-  object-fit: contain;
-}
-.nav-middle {
-  display: flex;
-  gap: 12px;
-}
-.nav-middle a {
-  text-decoration: none;
-  color: var(--text);
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid transparent;
-  background: transparent;
-
-
-  transition: var(--transition);
-}
-.nav-middle a:hover {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
-}
-.nav-middle button {
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--text);
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-.nav-middle button:hover {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.nav-right a {
-  text-decoration: none;
-  color: var(--text);
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
-  transition: var(--transition);
-}
-.nav-right button {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text);
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-.nav-right .toggle,
-.nav-right .notify {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-}
-.nav-right a:hover {
-  border-color: rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.08);
-}
-.nav-right button:hover {
-  border-color: rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Main layout */
@@ -292,16 +182,6 @@ hr {
   padding: 16px 0 24px;
 }
 
-/* Buttons for toggle/notify placeholders */
-.toggle::after {
-  content: "☼";
-  font-size: 16px;
-}
-.notify::after {
-  content: "🔔";
-  font-size: 16px;
-}
-
 /* Animations */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
@@ -330,15 +210,6 @@ hr {
   }
 }
 @media (max-width: 768px) {
-  .navbar {
-    padding: 12px 5vw;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .nav-middle {
-    width: 100%;
-    justify-content: center;
-  }
   .main-first {
     padding: 48px 6vw 32px;
   }
