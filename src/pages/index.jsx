@@ -1,7 +1,10 @@
 import React from 'react'
 import "./Index.css"
 import Navbar from "../Components/Navbar/Navbar";
+import { useNavigate } from 'react-router-dom';
+
 function Index() {
+  const navigate = useNavigate();
   const features = [
     { title: "Notes", description: "Capture quick thoughts, ideas, and reminders. Organize with pins and search." },
     { title: "Diary", description: "Reflect on your day with personal journal entries. One moment at a time." },
@@ -28,7 +31,16 @@ function Index() {
           <h1>choose your canvas</h1>
           <div className="cards">
             {features.map((feature, index) => (
-              <div key={index} className="feature-card">
+              <div 
+                key={index} 
+                className="feature-card"
+                onClick={() => {
+                  if (feature.title === "Notes") {
+                    navigate('/notes');
+                  }
+                }}
+                style={{ cursor: feature.title === "Notes" ? 'pointer' : 'default' }}
+              >
                 <h2>{feature.title}</h2>
                 <p>{feature.description}</p>
               </div>
