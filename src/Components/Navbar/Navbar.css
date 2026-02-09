@@ -287,17 +287,32 @@
 }
 
 .form-track {
-	display: flex;
-	width: 200%;
-	transition: 400ms ease;
+	display: grid;
+	grid-template-areas: "stack";
+	width: 100%;
+	position: relative;
 }
 
 .auth-form {
-	width: 50%;
+	grid-area: stack;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
 	padding: 6px 6px 2px;
+	transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+	opacity: 0;
+	transform: translateY(20px);
+	pointer-events: none;
+	visibility: hidden;
+}
+
+.auth-form.active {
+	opacity: 1;
+	transform: translateY(0);
+	pointer-events: auto;
+	visibility: visible;
+	z-index: 10;
 }
 
 .field {
@@ -440,16 +455,6 @@
 
 	.auth-body {
 		grid-template-columns: 1fr;
-	}
-
-	.form-track {
-		width: 100%;
-		flex-direction: column;
-		transform: translateX(0%) !important;
-	}
-
-	.auth-form {
-		width: 100%;
 	}
 
 	.dual {

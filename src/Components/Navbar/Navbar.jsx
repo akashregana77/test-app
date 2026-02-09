@@ -108,11 +108,8 @@ const AuthModal = ({ initialMode, onClose }) => {
               </button>
             </div>
 
-            <div
-              className="form-track"
-              style={{ transform: mode === "login" ? "translateX(0%)" : "translateX(-50%)" }}
-            >
-              <form className="auth-form" onSubmit={(e) => handleSubmit(e, "login")}>
+            <div className="form-track">
+              <form className={`auth-form ${mode === "login" ? "active" : ""}`} onSubmit={(e) => handleSubmit(e, "login")}>
                 <div className={`field ${loginUsername ? "filled" : ""}`}>
                   <input
                     type="text"
@@ -146,7 +143,7 @@ const AuthModal = ({ initialMode, onClose }) => {
                 </button>
               </form>
 
-              <form className="auth-form" onSubmit={(e) => handleSubmit(e, "signup")}>
+              <form className={`auth-form ${mode === "signup" ? "active" : ""}`} onSubmit={(e) => handleSubmit(e, "signup")}>
                 <div className={`field ${signupName ? "filled" : ""}`}>
                   <input
                     type="text"

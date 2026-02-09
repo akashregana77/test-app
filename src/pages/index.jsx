@@ -38,8 +38,11 @@ function Index() {
                   if (feature.title === "Notes") {
                     navigate('/notes');
                   }
+                  if (feature.title === "Diary") {
+                    navigate('/diary');
+                  }
                 }}
-                style={{ cursor: feature.title === "Notes" ? 'pointer' : 'default' }}
+                style={{ cursor: feature.title === "Notes" || feature.title === "Diary"  ? 'pointer' : 'default' }}
               >
                 <h2>{feature.title}</h2>
                 <p>{feature.description}</p>

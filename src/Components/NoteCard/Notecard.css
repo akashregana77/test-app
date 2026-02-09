@@ -1,0 +1,171 @@
+:root {
+  --card-surface: rgba(12, 23, 46, 0.9);
+  --card-glow: rgba(56, 189, 248, 0.55);
+  --card-glow-strong: rgba(59, 130, 246, 0.8);
+  --card-border: rgba(148, 163, 184, 0.25);
+  --card-text: #e6edf7;
+  --card-subtext: #c9d5e6;
+}
+
+.note-card {
+  position: relative;
+  background: transparent;
+  color: var(--card-text);
+  min-height: 150px;
+  padding: 18px 18px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 8px 26px rgba(6, 12, 24, 0.55);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 3s ease;
+}
+
+.note-card::before,
+.note-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+
+/* .note-card::before {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.32) 0, transparent 38%),
+    radial-gradient(circle at 70% 30%, rgba(56, 189, 248, 0.26) 0, transparent 40%),
+    radial-gradient(circle at 30% 80%, rgba(59, 130, 246, 0.22) 0, transparent 44%),
+    linear-gradient(145deg, rgba(15, 23, 42, 0.65), rgba(8, 12, 24, 0.55));
+  mix-blend-mode: screen;
+  opacity: 0.45;
+  animation: dotDrift 10s ease-in-out infinite;
+} */
+
+.note-card::after {
+  background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    var(--card-glow-strong) 0%,
+    rgba(59, 130, 246, 0.25) 28%,
+    transparent 58%);
+  opacity: 0;
+}
+
+.note-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow:
+    0 16px 42px rgba(37, 99, 235, 0.32),
+    0 0 0 1px rgba(148, 163, 184, 0.12);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.note-card:hover::after {
+  opacity: 0.7;
+}
+
+.note-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.08rem;
+  color: #f7fbff;
+}
+
+.note-card p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--card-subtext);
+}
+
+.note-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.eyebrow {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(231, 239, 255, 0.7);
+  margin-bottom: 6px;
+}
+
+.card-actions {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.card-actions .icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: #dbeafe;
+  cursor: pointer;
+  transition: 180ms ease;
+}
+
+.card-actions .icon:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.card-actions .danger {
+  border-color: rgba(248, 113, 113, 0.35);
+  color: #fecdd3;
+}
+
+.note-body {
+  color: var(--card-subtext);
+}
+
+@media (max-width: 540px) {
+  .note-card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+}
+
+@keyframes dotDrift {
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.45; }
+  25% { transform: translate3d(6px, -4px, 0) scale(1.03); opacity: 0.5; }
+  50% { transform: translate3d(-4px, 6px, 0) scale(0.98); opacity: 0.4; }
+  75% { transform: translate3d(4px, 4px, 0) scale(1.02); opacity: 0.48; }
+  100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.45; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.35; filter: blur(0px); }
+  50% { opacity: 0.65; filter: blur(1px); }
+}
+.note-card {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.14), rgba(99, 102, 241, 0.12));
+  color: #e8ecf5;
+  min-height: 150px;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.note-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(37, 99, 235, 0.28);
+  border-color: rgba(99, 102, 241, 0.45);
+}
+
+.note-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+  color: #f5f7ff;
+}
+
+.note-card p {
+  margin: 0;
+  line-height: 1.5;
+  color: #d6dcef;
+}
