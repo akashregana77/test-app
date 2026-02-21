@@ -12,7 +12,7 @@ function Notes() {
     { id: 3, title: "Ideas", content: "Start a blog about tech trends.", pinned: false },
     { id: 4, title: "Books to Read", content: "1984 by George Orwell, Sapiens by Yuval Noah Harari.", pinned: false },
     { id: 5, title: "Travel Plans", content: "Visit Japan in spring for cherry blossoms.", pinned: false },
-    { id: 6, title: "Workout Routine", content: "Monday: Cardio, Wednesday: Strength Training, Friday: Yoga.Monday: Cardio, Wednesday: Strength Training, Friday: Yoga.Monday: Cardio, Wednesday: Strength Training, Friday: Yoga.Monday: Cardio, Wednesday: Strength Training, Friday: Yoga.", pinned: false },
+    { id: 6, title: "Workout Routine", content: "Monday: Cardio, Wednesday: Strength Training, Friday: Yoga.", pinned: false },
   ]);
 
   const filteredNotes = useMemo(() => {

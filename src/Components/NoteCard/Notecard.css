@@ -44,9 +44,9 @@
 
 .note-card::after {
   background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%),
-    var(--card-glow-strong) 0%,
-    rgba(59, 130, 246, 0.25) 28%,
-    transparent 58%);
+      var(--card-glow-strong) 0%,
+      rgba(59, 130, 246, 0.25) 28%,
+      transparent 58%);
   opacity: 0;
 }
 
@@ -104,6 +104,8 @@
   color: #dbeafe;
   cursor: pointer;
   transition: 180ms ease;
+  position: relative;
+  z-index: 2;
 }
 
 .card-actions .icon:hover {
@@ -128,17 +130,46 @@
 }
 
 @keyframes dotDrift {
-  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.45; }
-  25% { transform: translate3d(6px, -4px, 0) scale(1.03); opacity: 0.5; }
-  50% { transform: translate3d(-4px, 6px, 0) scale(0.98); opacity: 0.4; }
-  75% { transform: translate3d(4px, 4px, 0) scale(1.02); opacity: 0.48; }
-  100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.45; }
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.45;
+  }
+
+  25% {
+    transform: translate3d(6px, -4px, 0) scale(1.03);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translate3d(-4px, 6px, 0) scale(0.98);
+    opacity: 0.4;
+  }
+
+  75% {
+    transform: translate3d(4px, 4px, 0) scale(1.02);
+    opacity: 0.48;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.45;
+  }
 }
 
 @keyframes glowPulse {
-  0%, 100% { opacity: 0.35; filter: blur(0px); }
-  50% { opacity: 0.65; filter: blur(1px); }
+
+  0%,
+  100% {
+    opacity: 0.35;
+    filter: blur(0px);
+  }
+
+  50% {
+    opacity: 0.65;
+    filter: blur(1px);
+  }
 }
+
 .note-card {
   background: linear-gradient(135deg, rgba(37, 99, 235, 0.14), rgba(99, 102, 241, 0.12));
   color: #e8ecf5;
