@@ -42,6 +42,19 @@ function About() {
       tone: "purple",
       lottie: "https://lottie.host/57ff4b7b-492a-4036-83ca-d657fd9b3997/WaFU2Ftr82.lottie",
     },
+    {
+      title: "Daily GK Bits",
+      summary: "Log, organize, and revisit daily general knowledge updates effortlessly.",
+      bullets: [
+        "Date-based knowledge logging — pick a day, add what you learned.",
+        "Explorer-style categories like Sports, Politics, Science & more.",
+        "Add, edit, and delete GK bits instantly with smooth interactions.",
+        "Calendar sidebar highlights days with entries and tracks your streak.",
+      ],
+      badge: "Knowledge log",
+      tone: "teal",
+      lottie: "https://lottie.host/f3baacbb-b3f2-40e7-9fd1-539eccab21da/7rny0AU37g.lottie"
+    },
   ];
 
   return (
@@ -99,9 +112,13 @@ function About() {
                     style={{ width: "100%", height: "100%" }}
                   />
                 </div>
+              ) : feature.gif ? (
+                <div className="about-gif" aria-hidden="true">
+                  <img src={feature.gif} alt={feature.title} />
+                </div>
               ) : (
-                <span className="about-icon" aria-hidden="true">
-                  {feature.icon}
+                <span className="about-icon about-icon--emoji" aria-hidden="true">
+                  📚
                 </span>
               )}
               <span className="about-badge">{feature.badge}</span>

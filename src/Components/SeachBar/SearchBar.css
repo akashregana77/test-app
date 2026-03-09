@@ -67,3 +67,33 @@
     transform: translateY(0);
     filter: brightness(1);
 }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 540px) {
+    .search {
+        width: 100%;
+        padding: 0.4rem 0.5rem;
+        border-radius: 12px;
+    }
+
+    .search__input {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.5rem 0.3rem 1.2rem;
+    }
+
+    .search__button {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+@media (max-width: 380px) {
+    .search {
+        padding: 0.35rem 0.45rem;
+    }
+
+    .search__input {
+        font-size: 0.85rem;
+        padding: 0.25rem 0.4rem 0.25rem 1rem;
+    }
+}

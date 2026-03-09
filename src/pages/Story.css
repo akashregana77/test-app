@@ -1,0 +1,821 @@
+/* =============================================
+   STORY WRITING PAGE — Professional Author Workspace
+   ============================================= */
+
+/* ---------- Page wrapper ---------- */
+.story-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background:
+    radial-gradient(120% 120% at 10% 20%, rgba(124, 58, 237, 0.08), transparent 40%),
+    radial-gradient(100% 100% at 90% 80%, rgba(34, 211, 238, 0.06), transparent 35%),
+    var(--bg);
+  color: var(--text);
+}
+
+/* ---------- Layout ---------- */
+.story-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* =============================================
+   SIDEBAR — VS Code style explorer
+   ============================================= */
+.story-sidebar {
+  width: 280px;
+  min-width: 280px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.story-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+.story-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.story-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.story-sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Sidebar header */
+.story-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 16px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  user-select: none;
+}
+
+.story-sidebar-header-icon {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.story-sidebar-add-btn {
+  margin-left: auto;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.story-sidebar-add-btn:hover {
+  color: var(--accent);
+  border-color: rgba(249, 115, 22, 0.3);
+  background: rgba(249, 115, 22, 0.08);
+}
+
+/* =============================================
+   TREE — File explorer items
+   ============================================= */
+.story-tree {
+  flex: 1;
+  padding: 8px 0;
+  overflow-y: auto;
+}
+
+.story-tree-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.835rem;
+  padding: 5px 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+  position: relative;
+  user-select: none;
+}
+
+.story-tree-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Book-level indent */
+.story-tree-book-btn {
+  padding-left: 10px;
+  font-weight: 600;
+}
+
+/* Chapter-level indent */
+.story-tree-chapter-btn {
+  padding-left: 28px;
+  font-weight: 500;
+}
+
+/* Page-level indent */
+.story-tree-page-btn {
+  padding-left: 48px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.story-tree-page-btn:hover {
+  color: var(--text);
+}
+
+.story-tree-page-btn.active {
+  background: rgba(249, 115, 22, 0.1);
+  color: var(--accent);
+  border-right: 2px solid var(--accent);
+}
+
+.story-tree-page-btn.active .page-icon {
+  color: var(--accent);
+}
+
+/* Icons */
+.story-tree-toggle {
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.story-tree-icon {
+  flex-shrink: 0;
+}
+
+.book-icon {
+  color: #f59e0b;
+}
+
+.chapter-icon {
+  color: #60a5fa;
+}
+
+.page-icon {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.story-tree-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Inline rename input ─────────────── */
+.story-inline-edit {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.story-inline-input {
+  width: 100%;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(249, 115, 22, 0.45);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.story-inline-input:focus {
+  border-color: rgba(249, 115, 22, 0.6);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+}
+
+/* Inline add / delete actions */
+.story-tree-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  padding: 2px;
+  border-radius: 4px;
+  transition: opacity 0.15s, background 0.15s, color 0.15s;
+  color: var(--muted);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.story-tree-item:hover .story-tree-action {
+  opacity: 1;
+}
+
+.story-tree-action:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--accent);
+}
+
+.story-tree-action.danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.story-tree-children {
+  overflow: hidden;
+}
+
+/* =============================================
+   MOBILE SIDEBAR
+   ============================================= */
+.story-sidebar-overlay {
+  display: none;
+}
+
+.story-mobile-toggle {
+  display: none;
+}
+
+/* =============================================
+   WORKSPACE — Main editor area
+   ============================================= */
+.story-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Editor ──────────────────────────────── */
+.story-editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.story-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(17, 24, 39, 0.35);
+  backdrop-filter: blur(12px);
+}
+
+/* Breadcrumb */
+.story-editor-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  flex-wrap: wrap;
+}
+
+.breadcrumb-book {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.breadcrumb-chapter {
+  color: #60a5fa;
+  font-weight: 500;
+}
+
+.breadcrumb-page {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.breadcrumb-sep {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 0.75rem;
+}
+
+/* Status bar */
+.story-editor-status {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.78rem;
+}
+
+.status-saving,
+.status-saved {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+
+.status-saving {
+  color: var(--accent);
+}
+
+.status-saved {
+  color: #34d399;
+}
+
+.word-count {
+  color: var(--muted);
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.story-save-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  background: linear-gradient(135deg, var(--accent), #ea580c);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 12px rgba(249, 115, 22, 0.25);
+}
+
+.story-save-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+}
+
+.story-save-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.story-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Writing body ────────────────────────── */
+.story-editor-body {
+  flex: 1;
+  display: flex;
+  padding: 28px;
+  overflow: hidden;
+}
+
+.story-textarea {
+  flex: 1;
+  resize: none;
+  border: none;
+  outline: none;
+  background: rgba(17, 24, 39, 0.25);
+  color: var(--text);
+  font-family: "Georgia", "Playfair Display", serif;
+  font-size: 1.08rem;
+  line-height: 1.85;
+  padding: 32px 36px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.06) transparent;
+}
+
+.story-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.18);
+  font-style: italic;
+}
+
+.story-textarea:focus {
+  border-color: rgba(249, 115, 22, 0.2);
+  box-shadow:
+    0 0 0 3px rgba(249, 115, 22, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.story-textarea::-webkit-scrollbar {
+  width: 6px;
+}
+.story-textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+.story-textarea::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+/* ── Empty state ─────────────────────────── */
+.story-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--muted);
+  text-align: center;
+  padding: 40px;
+}
+
+.story-empty-state h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+.story-empty-state p {
+  margin: 0;
+  font-size: 0.9rem;
+  max-width: 340px;
+  line-height: 1.6;
+}
+
+/* =============================================
+   QUICK ACTIONS BAR — Bottom bar
+   ============================================= */
+.story-quick-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(17, 24, 39, 0.4);
+}
+
+.story-quick-actions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.story-quick-actions button:hover {
+  background: rgba(249, 115, 22, 0.1);
+  border-color: rgba(249, 115, 22, 0.25);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.story-quick-actions button:active {
+  transform: scale(0.96);
+}
+
+/* =============================================
+   SPIN ANIMATION — loader icon
+   ============================================= */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+/* =============================================
+   NAME PROMPT — Animated overlay for new book/chapter
+   ============================================= */
+.name-prompt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 20px;
+}
+
+.name-prompt-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(17, 24, 39, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 28px 28px 24px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.name-prompt-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.name-prompt-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(249, 115, 22, 0.12);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.name-prompt-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+
+.name-prompt-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  color: var(--muted);
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.name-prompt-close:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.name-prompt-hint {
+  margin: 4px 0 18px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  padding-left: 46px;
+}
+
+.name-prompt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.name-prompt-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  box-sizing: border-box;
+}
+
+.name-prompt-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+  font-style: italic;
+}
+
+.name-prompt-input:focus {
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.08);
+}
+
+.name-prompt-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.name-prompt-cancel {
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.name-prompt-cancel:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.name-prompt-confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  background: linear-gradient(135deg, var(--accent), #ea580c);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 12px rgba(249, 115, 22, 0.25);
+}
+
+.name-prompt-confirm:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+}
+
+.name-prompt-confirm:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.name-prompt-confirm:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* =============================================
+   RESPONSIVE — Mobile-first adjustments
+   ============================================= */
+@media (max-width: 768px) {
+  /* Sidebar off-canvas */
+  .story-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 300;
+    width: 280px;
+    min-width: 0;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .story-sidebar--open {
+    transform: translateX(0);
+  }
+
+  /* Overlay */
+  .story-sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 299;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Mobile toggle button */
+  .story-mobile-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: fixed;
+    top: 78px;
+    left: 14px;
+    z-index: 250;
+    padding: 9px 16px 9px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.25s ease;
+  }
+
+  .story-mobile-toggle svg {
+    color: var(--accent);
+    filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.3));
+  }
+
+  .story-mobile-toggle:hover {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: rgba(249, 115, 22, 0.25);
+  }
+
+  .story-mobile-toggle.toggle-active {
+    background: rgba(249, 115, 22, 0.15);
+    border-color: rgba(249, 115, 22, 0.35);
+  }
+
+  /* Editor adjustments */
+  .story-editor-header {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 54px;
+  }
+
+  .story-editor-body {
+    padding: 12px;
+  }
+
+  .story-textarea {
+    padding: 20px;
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+
+  .story-quick-actions {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+
+  .story-quick-actions button span {
+    display: none;
+  }
+
+  .story-quick-actions button {
+    padding: 8px 10px;
+    border-radius: 8px;
+  }
+
+  .toggle-label {
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .story-editor-breadcrumb {
+    font-size: 0.75rem;
+  }
+
+  .story-editor-status {
+    font-size: 0.72rem;
+    gap: 8px;
+  }
+
+  .story-save-btn {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .story-textarea {
+    padding: 16px;
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .word-count {
+    display: none;
+  }
+}
+
+/* =============================================
+   DESKTOP ENHANCEMENTS
+   ============================================= */
+@media (min-width: 769px) {
+  .toggle-label {
+    display: none;
+  }
+}

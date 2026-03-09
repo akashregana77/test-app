@@ -126,6 +126,59 @@
   .note-card {
     padding: 16px;
     border-radius: 14px;
+    min-height: 130px;
+  }
+
+  .note-head {
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .note-card h3 {
+    font-size: 0.98rem;
+    margin-bottom: 6px;
+  }
+
+  .note-body {
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+  }
+
+  /* Bigger touch targets on mobile */
+  .card-actions .icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+  }
+
+  .card-actions {
+    gap: 5px;
+  }
+}
+
+@media (max-width: 380px) {
+  .note-card {
+    padding: 14px;
+    min-height: 110px;
+  }
+
+  .card-actions .icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .note-card h3 {
+    font-size: 0.92rem;
+  }
+
+  .note-body {
+    font-size: 0.84rem;
   }
 }
 

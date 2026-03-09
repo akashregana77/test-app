@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../Components/Navbar/Navbar";
 import CalendarSidebar from "../Components/Diary/CalendarSidebar";
@@ -19,19 +19,29 @@ const SEED_ENTRIES = {
   [toKey(new Date(Date.now() - 86400000 * 7))]: "Reflecting on this week — shipped two features and fixed a tricky CSS grid issue. Feeling accomplished.",
 };
 
+const SEED_MOODS = {
+  [toKey(new Date())]: "🔥",
+  [toKey(new Date(Date.now() - 86400000))]: "🤔",
+};
+
 function Diary() {
   const [entries, setEntries] = useState(SEED_ENTRIES);
+  const [moods, setMoods] = useState(SEED_MOODS);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [toasts, setToasts] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showSaveSuccess, setShowSaveSuccess] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const toastIdRef = useRef(0);
   const autoSaveTimerRef = useRef(null);
+  const typingTimerRef = useRef(null);
 
   const currentKey = toKey(selectedDate);
   const currentContent = entries[currentKey] || "";
+  const currentMood = moods[currentKey] || "";
 
   // Simulated loading on mount
   useEffect(() => {
@@ -41,6 +51,21 @@ function Diary() {
 
   // Set of date keys that have entries
   const entriesDates = new Set(Object.keys(entries).filter((k) => entries[k].trim()));
+
+  // Streak calculation — consecutive days with entries ending today (or yesterday)
+  const streak = useMemo(() => {
+    let count = 0;
+    const d = new Date();
+    const todayKey = toKey(d);
+    if (!entriesDates.has(todayKey)) {
+      d.setDate(d.getDate() - 1);
+    }
+    while (entriesDates.has(toKey(d))) {
+      count++;
+      d.setDate(d.getDate() - 1);
+    }
+    return count;
+  }, [entriesDates]);
 
   // Toast helper
   const addToast = useCallback((message, type = "info") => {
@@ -53,15 +78,27 @@ function Diary() {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  // Content change with auto-save simulation
+  // Content change with auto-save simulation + typing tracking
   const handleChange = useCallback(
     (value) => {
       setEntries((prev) => ({ ...prev, [currentKey]: value }));
+      setIsTyping(true);
+
+      if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
+      typingTimerRef.current = setTimeout(() => setIsTyping(false), 1200);
 
       if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
       autoSaveTimerRef.current = setTimeout(() => {
         // Auto-save simulation — already in state
       }, 1500);
+    },
+    [currentKey]
+  );
+
+  // Mood change
+  const handleMoodChange = useCallback(
+    (emoji) => {
+      setMoods((prev) => ({ ...prev, [currentKey]: emoji }));
     },
     [currentKey]
   );
@@ -75,13 +112,16 @@ function Diary() {
     setIsSaving(true);
     setTimeout(() => {
       setIsSaving(false);
+      setShowSaveSuccess(true);
       addToast("Entry saved successfully!", "success");
+      setTimeout(() => setShowSaveSuccess(false), 1600);
     }, 900);
   }, [currentContent, addToast]);
 
   // Clear action
   const handleClear = useCallback(() => {
     setEntries((prev) => ({ ...prev, [currentKey]: "" }));
+    setMoods((prev) => ({ ...prev, [currentKey]: "" }));
     addToast("Editor cleared.", "info");
   }, [currentKey, addToast]);
 
@@ -96,6 +136,11 @@ function Diary() {
 
   const handleDeleteConfirm = useCallback(() => {
     setEntries((prev) => {
+      const next = { ...prev };
+      delete next[currentKey];
+      return next;
+    });
+    setMoods((prev) => {
       const next = { ...prev };
       delete next[currentKey];
       return next;
@@ -126,6 +171,7 @@ function Diary() {
           entriesDates={entriesDates}
           isOpen={sidebarOpen}
           onToggle={() => setSidebarOpen((v) => !v)}
+          streak={streak}
         />
 
         <main className="diary-main">
@@ -149,6 +195,10 @@ function Diary() {
                     onClear={handleClear}
                     onDelete={handleDeleteRequest}
                     isSaving={isSaving}
+                    mood={currentMood}
+                    onMoodChange={handleMoodChange}
+                    showSaveSuccess={showSaveSuccess}
+                    isTyping={isTyping}
                   />
                 ) : null}
 

@@ -9,6 +9,7 @@ function Index() {
     { title: "Notes", description: "Capture quick thoughts, ideas, and reminders. Organize with pins and search." },
     { title: "Diary", description: "Reflect on your day with personal journal entries. One moment at a time." },
     { title: "Story Writing", description: "Let your creativity flow. Write long-form stories and narratives." },
+    { title: "Daily GK Bits", description: "Log daily general knowledge updates organized by categories like Sports, Politics, Science." },
   ];
 
   return (
@@ -41,8 +42,14 @@ function Index() {
                   if (feature.title === "Diary") {
                     navigate('/diary');
                   }
+                  if (feature.title === "Story Writing") {
+                    navigate('/story');
+                  }
+                  if (feature.title === "Daily GK Bits") {
+                    navigate('/gkbits');
+                  }
                 }}
-                style={{ cursor: feature.title === "Notes" || feature.title === "Diary"  ? 'pointer' : 'default' }}
+                style={{ cursor: 'pointer' }}
               >
                 <h2>{feature.title}</h2>
                 <p>{feature.description}</p>

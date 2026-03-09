@@ -1,5 +1,5 @@
-/* ========================================
-   DIARY PAGE — Premium Journaling UI
+﻿/* ========================================
+   DIARY PAGE - Premium Journaling UI
    ======================================== */
 
 /* ---------- Page wrapper ---------- */
@@ -51,33 +51,118 @@
   border-radius: 10px;
 }
 
-/* Mobile toggle button */
+/* ---------- Mobile toggle button — floating pill with SVG icon ---------- */
 .calendar-mobile-toggle {
   display: none;
+  position: fixed;
+  top: 80px;
+  left: 16px;
+  z-index: 250;
   align-items: center;
   gap: 8px;
-  background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 18px 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 14px;
+  background: rgba(17, 24, 39, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   color: var(--text);
-  padding: 10px 18px;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
   cursor: pointer;
-  margin: 16px 20px 0;
-  transition: background 0.2s ease;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 0 rgba(249, 115, 22, 0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.calendar-mobile-toggle .calendar-icon-svg {
+  flex-shrink: 0;
+  transition: color 0.25s ease, filter 0.25s ease;
+  color: var(--accent);
+  filter: drop-shadow(0 0 3px rgba(249, 115, 22, 0.3));
 }
 .calendar-mobile-toggle:hover {
-  background: rgba(17, 24, 39, 0.9);
+  background: rgba(17, 24, 39, 0.92);
+  border-color: rgba(249, 115, 22, 0.25);
+  box-shadow:
+    0 6px 28px rgba(0, 0, 0, 0.35),
+    0 0 0 2px rgba(249, 115, 22, 0.08);
+}
+.calendar-mobile-toggle:hover .calendar-icon-svg {
+  filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.5));
+}
+.calendar-mobile-toggle:active {
+  transform: scale(0.96);
+}
+.calendar-mobile-toggle.toggle-active {
+  background: rgba(249, 115, 22, 0.15);
+  border-color: rgba(249, 115, 22, 0.35);
+  box-shadow:
+    0 4px 24px rgba(249, 115, 22, 0.2),
+    0 0 0 2px rgba(249, 115, 22, 0.1);
+}
+.calendar-mobile-toggle.toggle-active .calendar-icon-svg {
+  filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.6));
 }
 
-/* Calendar overlay for mobile */
+/* ---------- Calendar overlay for mobile ---------- */
 .calendar-overlay {
   display: none;
 }
 
-/* Calendar header (month nav) */
+/* ---------- Streak counter ---------- */
+.streak-counter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.10), rgba(34, 211, 238, 0.06));
+  border: 1px solid rgba(249, 115, 22, 0.15);
+}
+.streak-flame {
+  font-size: 1.3rem;
+  filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.4));
+  animation: flamePulse 2s ease-in-out infinite;
+}
+@keyframes flamePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+.streak-text {
+  font-size: 0.82rem;
+  color: var(--muted);
+  letter-spacing: 0.2px;
+}
+.streak-text strong {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ---------- Sidebar stats ---------- */
+.sidebar-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.sidebar-stat-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+.sidebar-stat-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+
+/* ---------- Calendar header (month nav) ---------- */
 .calendar-header {
   display: flex;
   align-items: center;
@@ -101,6 +186,7 @@
 .cal-nav-btn:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.04);
 }
 
 .cal-month-label {
@@ -112,7 +198,7 @@
   text-align: center;
 }
 
-/* Calendar grid */
+/* ---------- Calendar grid ---------- */
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -133,7 +219,7 @@
   display: contents;
 }
 
-/* Individual date cell */
+/* ---------- Individual date cell — enhanced glow ---------- */
 .cal-date {
   position: relative;
   display: flex;
@@ -148,10 +234,19 @@
   font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.25s ease;
 }
 .cal-date:hover {
   background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+}
+
+.cal-date.has-entry:not(.selected) {
+  background: rgba(34, 211, 238, 0.06);
+}
+.cal-date.has-entry:not(.selected):hover {
+  background: rgba(34, 211, 238, 0.12);
+  box-shadow: 0 0 14px rgba(34, 211, 238, 0.12);
 }
 
 .cal-date.out-month {
@@ -167,6 +262,11 @@
   font-weight: 700;
   box-shadow: inset 0 0 0 1.5px rgba(249, 115, 22, 0.35);
 }
+.cal-date.today:hover {
+  box-shadow:
+    inset 0 0 0 1.5px rgba(249, 115, 22, 0.35),
+    0 0 16px rgba(249, 115, 22, 0.15);
+}
 
 .cal-date.selected {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
@@ -174,11 +274,14 @@
   font-weight: 700;
   box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
 }
+.cal-date.selected:hover {
+  box-shadow: 0 6px 24px rgba(249, 115, 22, 0.4);
+}
 .cal-date.selected.today {
   box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
 }
 
-/* Entry dot indicator */
+/* ---------- Entry dot indicator ---------- */
 .entry-dot {
   position: absolute;
   bottom: 3px;
@@ -193,7 +296,7 @@
   background: #0b1021;
 }
 
-/* Today button */
+/* ---------- Today button ---------- */
 .cal-today-btn {
   width: 100%;
   padding: 10px;
@@ -211,6 +314,7 @@
   background: rgba(249, 115, 22, 0.12);
   border-color: rgba(249, 115, 22, 0.3);
   color: var(--accent);
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.08);
 }
 
 /* =============================================
@@ -239,7 +343,7 @@
   margin: 0 auto;
 }
 
-/* Editor header */
+/* ---------- Editor header ---------- */
 .editor-header {
   display: flex;
   align-items: flex-start;
@@ -292,20 +396,87 @@
   opacity: 0.4;
 }
 
-/* Textarea wrapper */
+/* ---------- Mood picker ---------- */
+.mood-picker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.mood-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+.mood-options {
+  display: flex;
+  gap: 6px;
+}
+.mood-btn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.mood-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.mood-btn.mood-active {
+  background: rgba(249, 115, 22, 0.15);
+  border-color: rgba(249, 115, 22, 0.35);
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.15);
+}
+.mood-emoji {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+/* ---------- Textarea wrapper — breathing focus glow ---------- */
 .editor-textarea-wrap {
   position: relative;
   border-radius: 16px;
   padding: 2px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
 }
 .editor-textarea-wrap.focused {
   border-color: rgba(249, 115, 22, 0.35);
   box-shadow:
     0 0 0 3px rgba(249, 115, 22, 0.08),
     0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: focusBreathe 3s ease-in-out infinite;
+}
+.editor-textarea-wrap.typing {
+  border-color: rgba(34, 211, 238, 0.35);
+  box-shadow:
+    0 0 0 3px rgba(34, 211, 238, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: none;
+}
+@keyframes focusBreathe {
+  0%, 100% {
+    box-shadow:
+      0 0 0 3px rgba(249, 115, 22, 0.06),
+      0 8px 32px rgba(0, 0, 0, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 0 0 5px rgba(249, 115, 22, 0.12),
+      0 12px 40px rgba(0, 0, 0, 0.22);
+  }
 }
 
 .editor-textarea {
@@ -338,7 +509,37 @@
   font-style: italic;
 }
 
-/* Action buttons */
+/* ---------- Keyboard shortcut hint ---------- */
+.shortcut-hint {
+  position: absolute;
+  bottom: 14px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+.shortcut-hint kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  line-height: 1.4;
+}
+.shortcut-hint-text {
+  margin-left: 2px;
+}
+
+/* ---------- Action buttons ---------- */
 .editor-actions {
   display: flex;
   gap: 10px;
@@ -398,7 +599,17 @@
   align-items: center;
 }
 
-/* Auto-save indicator */
+/* ---------- Save success floating checkmark ---------- */
+.save-success-overlay {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+.save-check-svg {
+  filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.4));
+}
+
+/* ---------- Auto-save indicator — typing-aware ---------- */
 .autosave-indicator {
   display: flex;
   align-items: center;
@@ -406,6 +617,10 @@
   margin-top: 14px;
   font-size: 0.75rem;
   color: var(--muted);
+  transition: color 0.3s ease;
+}
+.autosave-indicator.typing-active {
+  color: var(--accent-2);
 }
 .autosave-dot {
   width: 6px;
@@ -413,13 +628,22 @@
   border-radius: 50%;
   background: #22c55e;
   animation: autosavePulse 2s ease-in-out infinite;
+  transition: background 0.3s ease;
+}
+.autosave-dot.dot-typing {
+  background: var(--accent-2);
+  animation: typingPulse 0.8s ease-in-out infinite;
 }
 @keyframes autosavePulse {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 1; }
 }
+@keyframes typingPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
 
-/* Empty state */
+/* ---------- Empty state ---------- */
 .empty-state {
   text-align: center;
   padding: 48px 24px;
@@ -688,13 +912,15 @@
     top: 0;
     left: 0;
     bottom: 0;
-    z-index: 100;
+    z-index: 200;
     transform: translateX(-100%);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 4px 0 40px rgba(0, 0, 0, 0.3);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.35s ease;
+    box-shadow: none;
   }
   .calendar-sidebar.open {
     transform: translateX(0);
+    box-shadow: 8px 0 48px rgba(0, 0, 0, 0.45);
   }
 
   .calendar-mobile-toggle {
@@ -705,12 +931,18 @@
     display: block;
     position: fixed;
     inset: 0;
-    z-index: -1;
-    background: rgba(0, 0, 0, 0.4);
+    z-index: 190;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 
   .diary-main {
     padding: 20px 24px 40px;
+  }
+
+  .mood-picker {
+    flex-wrap: wrap;
   }
 }
 
@@ -719,10 +951,19 @@
   .calendar-sidebar {
     width: 280px;
     min-width: 280px;
+    padding: 24px 16px 16px;
+  }
+
+  .calendar-mobile-toggle {
+    top: 76px;
+    left: 12px;
+    padding: 8px 14px 8px 10px;
+    font-size: 0.78rem;
+    border-radius: 12px;
   }
 
   .diary-main {
-    padding: 16px 16px 32px;
+    padding: 60px 16px 32px 16px;
   }
 
   .editor-date {
@@ -734,10 +975,31 @@
     gap: 8px;
   }
 
+  .editor-meta {
+    font-size: 0.72rem;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .mood-picker {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+  }
+  .mood-btn {
+    width: 34px;
+    height: 34px;
+  }
+
   .editor-textarea {
     padding: 16px 18px;
     font-size: 0.95rem;
     min-height: 200px;
+  }
+
+  .shortcut-hint {
+    display: none;
   }
 
   .editor-actions {
@@ -756,5 +1018,67 @@
   .toast {
     min-width: auto;
     max-width: none;
+  }
+
+  .streak-counter {
+    padding: 10px 14px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .diary-main {
+    padding: 56px 12px 28px 12px;
+  }
+
+  .editor-date {
+    font-size: 1.05rem;
+  }
+
+  .today-badge {
+    font-size: 0.65rem;
+    padding: 2px 10px;
+  }
+
+  .editor-textarea {
+    padding: 14px 14px;
+    font-size: 0.9rem;
+    min-height: 180px;
+  }
+
+  .mood-options {
+    gap: 4px;
+  }
+  .mood-btn {
+    width: 30px;
+    height: 30px;
+  }
+  .mood-emoji {
+    font-size: 1rem;
+  }
+
+  .editor-btn {
+    padding: 10px 16px;
+    font-size: 0.82rem;
+  }
+
+  .calendar-sidebar {
+    width: 260px;
+    min-width: 260px;
+    padding: 20px 14px 14px;
+  }
+
+  .cal-date {
+    font-size: 0.75rem;
+  }
+
+  .streak-counter {
+    padding: 8px 12px;
+  }
+  .streak-flame {
+    font-size: 1.1rem;
+  }
+  .streak-text {
+    font-size: 0.75rem;
   }
 }

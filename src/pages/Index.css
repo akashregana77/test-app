@@ -1,9 +1,3 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   font-family:     "Playfair Display", serif;
@@ -206,14 +200,95 @@ hr {
 /* Responsive: stack cards on small screens */
 @media (max-width: 900px) {
   .cards {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
-}
-@media (max-width: 768px) {
-  .main-first {
-    padding: 48px 6vw 32px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
   }
   .main-second {
-    padding: 32px 6vw 24px;
+    padding: 36px 6vw 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-first {
+    min-height: 85vh;
+    padding: 48px 6vw 32px;
+    gap: 8px;
+  }
+  .main-first h1 {
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+  }
+  .main-first h5 {
+    font-size: 0.88rem;
+    max-width: 90%;
+  }
+  .main-second {
+    padding: 32px 5vw 24px;
+  }
+  .main-second h1 {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .main-first {
+    min-height: 80vh;
+    padding: 40px 5vw 28px;
+    gap: 6px;
+  }
+  .main-first h1 {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    line-height: 1.15;
+  }
+  .main-first h5 {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    max-width: 95%;
+  }
+  .main-first-btns {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .main-first-btns button {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+  .main-second {
+    padding: 28px 4vw 20px;
+  }
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .feature-card {
+    padding: 16px;
+  }
+  .feature-card h2 {
+    font-size: 1rem;
+  }
+  .feature-card p {
+    font-size: 0.88rem;
+  }
+  .footer {
+    font-size: 0.82rem;
+    padding: 14px 0 20px;
+  }
+}
+
+@media (max-width: 380px) {
+  .main-first {
+    padding: 36px 4vw 24px;
+  }
+  .main-first h1 {
+    font-size: 1.4rem;
+  }
+  .main-first h5 {
+    font-size: 0.78rem;
+  }
+  .main-first-btns button {
+    padding: 12px 16px;
+    font-size: 0.88rem;
   }
 }

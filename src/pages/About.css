@@ -158,6 +158,28 @@
   filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.35));
 }
 
+.about-gif {
+  width: 100%;
+  max-width: 320px;
+  z-index: 2;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.35));
+  border-radius: 12px;
+  overflow: hidden;
+}
+.about-gif img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+.about-icon--emoji {
+  font-size: 4rem;
+  z-index: 2;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.35));
+  animation: floaty 6s ease-in-out infinite;
+}
+
 .about-visual::before {
   content: "";
   position: absolute;
@@ -252,10 +274,191 @@
 @media (max-width: 960px) {
   .about-block {
     grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 22px;
   }
 
   .about-block--flip {
     direction: ltr;
+  }
+
+  .about-visual {
+    min-height: 200px;
+  }
+
+  .about-sections {
+    gap: 28px;
+    padding: 12px 5vw 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    padding: 72px 5vw 36px;
+  }
+
+  .about-hero h1 {
+    font-size: clamp(1.6rem, 5.5vw, 2.4rem);
+    line-height: 1.12;
+  }
+
+  .about-hero .lede {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .about-hero .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
+  }
+
+  .about-sections {
+    gap: 24px;
+    padding: 8px 4.5vw 48px;
+  }
+
+  .about-block {
+    padding: 18px;
+    gap: 20px;
+  }
+
+  .about-copy h2 {
+    font-size: 1.4rem;
+  }
+
+  .about-copy .summary {
+    font-size: 0.9rem;
+  }
+
+  .about-copy ul {
+    font-size: 0.9rem;
+    gap: 6px;
+    padding-left: 16px;
+  }
+
+  .about-visual .about-badge {
+    font-size: 0.78rem;
+    padding: 6px 10px;
+    top: 12px;
+    right: 12px;
+  }
+}
+
+@media (max-width: 540px) {
+  .about-hero {
+    padding: 64px 4vw 28px;
+  }
+
+  .about-hero h1 {
+    font-size: clamp(1.35rem, 6vw, 1.8rem);
+    line-height: 1.18;
+  }
+
+  .about-hero .lede {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .about-sections {
+    gap: 20px;
+    padding: 4px 3.5vw 40px;
+  }
+
+  .about-block {
+    padding: 14px;
+    gap: 16px;
+    border-radius: 14px;
+  }
+
+  .about-visual {
+    min-height: 180px;
+    border-radius: 12px;
+  }
+
+  .about-lottie {
+    max-width: 200px;
+  }
+
+  .about-copy h2 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+  }
+
+  .about-copy .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 1.2px;
+    margin-bottom: 4px;
+  }
+
+  .about-copy .summary {
+    font-size: 0.84rem;
+    margin-bottom: 10px;
+  }
+
+  .about-copy ul {
+    font-size: 0.84rem;
+    gap: 5px;
+    padding-left: 14px;
+  }
+
+  .about-copy li {
+    line-height: 1.55;
+  }
+
+  .about-visual .about-badge {
+    font-size: 0.72rem;
+    padding: 5px 9px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .hero-metrics {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .metric {
+    padding: 12px 14px;
+  }
+
+  .metric__number {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .about-hero {
+    padding: 56px 3.5vw 24px;
+  }
+
+  .about-hero h1 {
+    font-size: 1.25rem;
+  }
+
+  .about-hero .lede {
+    font-size: 0.8rem;
+  }
+
+  .about-block {
+    padding: 12px;
+  }
+
+  .about-visual {
+    min-height: 160px;
+  }
+
+  .about-lottie {
+    max-width: 170px;
+  }
+
+  .about-copy h2 {
+    font-size: 1.08rem;
+  }
+
+  .about-copy .summary,
+  .about-copy ul {
+    font-size: 0.8rem;
   }
 }
 

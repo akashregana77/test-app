@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "title": "My First Book",
+    "chapters": [
+      {
+        "id": 2,
+        "title": "Chapter 1 — The Beginning",
+        "pages": [
+          {
+            "id": 3,
+            "title": "Page 1",
+            "content": "It was a quiet morning when everything changed. The fog rolled through the valley like a silver river, swallowing the familiar shapes of the village one by one.\n\nShe stood at the edge of the cobblestone path, her fingers tracing the rough surface of the old stone wall. Somewhere beyond the mist, a bell tolled—slow and deliberate, as though counting down to something inevitable."
+          },
+          {
+            "id": 4,
+            "title": "Page 2",
+            "content": "The marketplace was empty. Stalls that usually overflowed with fruit, cloth, and chatter were bare, their canvas covers flapping in the wind like restless ghosts."
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Chapter 2 — The Journey",
+        "pages": [
+          {
+            "id": 6,
+            "title": "Page 1",
+            "content": "They set out at dawn, following a trail that wound through ancient oaks. The map was hand-drawn—smudged charcoal on yellowed paper—but it was all they had."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Short Stories Collection",
+    "chapters": [
+      {
+        "id": 8,
+        "title": "The Lighthouse Keeper",
+        "pages": [
+          {
+            "id": 9,
+            "title": "Draft 1",
+            "content": "Every evening at exactly 7:42 PM, the lighthouse would flicker twice before settling into its steady rotation. Nobody else seemed to notice. Nobody except Elara."
+          }
+        ]
+      }
+    ]
+  }
+]

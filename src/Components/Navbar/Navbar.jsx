@@ -213,6 +213,16 @@ const AuthModal = ({ initialMode, onClose }) => {
 
 const Navbar = () => {
   const [activeModal, setActiveModal] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  /* close drawer on route change / resize past mobile */
+  useEffect(() => {
+    const close = () => setMobileOpen(false);
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) close();
+    });
+    return () => window.removeEventListener("resize", close);
+  }, []);
 
   return (
     <>
@@ -220,17 +230,36 @@ const Navbar = () => {
         <div className="nav-left">
           <img src={logo} alt="ShortCut logo" className="brand-logo" />
         </div>
-        <div className="nav-middle">
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/profile">Profile</Link>
+
+        {/* Hamburger toggle – mobile only */}
+        <button
+          className={`hamburger ${mobileOpen ? "open" : ""}`}
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
+        >
+          <span className="bar" />
+          <span className="bar" />
+          <span className="bar" />
+        </button>
+
+        {/* Collapsible nav body */}
+        <div className={`nav-body ${mobileOpen ? "nav-body--open" : ""}`}>
+          <div className="nav-middle">
+            <Link to="/" onClick={() => setMobileOpen(false)}>Home</Link>
+            <Link to="/about" onClick={() => setMobileOpen(false)}>About</Link>
+            <Link to="/profile" onClick={() => setMobileOpen(false)}>Profile</Link>
+          </div>
+          <div className="nav-right">
+            <button className="toggle" aria-label="Toggle theme"></button>
+            <button className="notify" aria-label="Notifications"></button>
+            <button className="ghost" onClick={() => { setActiveModal("login"); setMobileOpen(false); }}>Login</button>
+            <button className="ghost" onClick={() => { setActiveModal("signup"); setMobileOpen(false); }}>Sign Up</button>
+          </div>
         </div>
-        <div className="nav-right">
-          <button className="toggle" aria-label="Toggle theme"></button>
-          <button className="notify" aria-label="Notifications"></button>
-          <button className="ghost" onClick={() => setActiveModal("login")}>Login</button>
-          <button className="ghost" onClick={() => setActiveModal("signup")}>Sign Up</button>
-        </div>
+
+        {/* overlay behind drawer on mobile */}
+        {mobileOpen && <div className="nav-overlay" onClick={() => setMobileOpen(false)} />}
       </nav>
 
       {activeModal && (

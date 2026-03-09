@@ -1,0 +1,552 @@
+/* ========================================
+   DAILY GK BITS PAGE
+   Consistent with Diary page design system
+   ======================================== */
+
+/* ---------- CSS Variables (inherited from global / diary) ---------- */
+:root {
+  --bg: #0f172a;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #f97316;
+  --accent-2: #22d3ee;
+}
+
+/* ---------- Page wrapper ---------- */
+.gk-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background:
+    radial-gradient(120% 120% at 10% 20%, rgba(124, 58, 237, 0.10), transparent 40%),
+    radial-gradient(100% 100% at 90% 80%, rgba(34, 211, 238, 0.08), transparent 35%),
+    var(--bg);
+  color: var(--text);
+}
+
+/* ---------- Layout ---------- */
+.gk-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ---------- Main area ---------- */
+.gk-main {
+  flex: 1;
+  padding: 32px 40px 40px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
+}
+.gk-main::-webkit-scrollbar {
+  width: 6px;
+}
+.gk-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+.gk-main::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+/* =============================================
+   GK EXPLORER
+   ============================================= */
+.gk-explorer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+.gk-explorer-header {
+  margin-bottom: 28px;
+}
+
+.gk-date-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.gk-date-title {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  background: linear-gradient(135deg, #fff 0%, #c7b8ff 50%, #8ae4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gk-page-title {
+  margin: 6px 0 8px;
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.4px;
+}
+
+.gk-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+/* ---------- Add category bar ---------- */
+.gk-add-category-bar {
+  margin-bottom: 20px;
+}
+
+.gk-add-cat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.2px;
+}
+.gk-add-cat-btn:hover {
+  background: rgba(249, 115, 22, 0.08);
+  border-color: rgba(249, 115, 22, 0.3);
+  color: var(--accent);
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.06);
+}
+
+.gk-add-cat-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gk-cat-input {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid rgba(249, 115, 22, 0.25);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.gk-cat-input:focus {
+  border-color: rgba(249, 115, 22, 0.45);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.08);
+}
+.gk-cat-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* =============================================
+   CATEGORY (FOLDER)
+   ============================================= */
+.gk-category {
+  margin-bottom: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.gk-category:hover {
+  border-color: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Category header ---------- */
+.gk-cat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease;
+}
+.gk-cat-header:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.gk-cat-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.gk-cat-folder-icon {
+  color: var(--accent);
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.25));
+}
+
+.gk-cat-emoji {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.gk-cat-name {
+  font-size: 1.05rem;
+  font-weight: 650;
+  color: var(--text);
+  letter-spacing: 0.2px;
+  flex: 1;
+}
+
+.gk-cat-count {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--accent-2);
+  letter-spacing: 0.3px;
+}
+
+.gk-cat-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.gk-cat-header:hover .gk-cat-actions {
+  opacity: 1;
+}
+
+.gk-cat-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.gk-cat-action-btn:hover {
+  background: rgba(249, 115, 22, 0.12);
+  border-color: rgba(249, 115, 22, 0.25);
+  color: var(--accent);
+}
+.gk-cat-action-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #f87171;
+}
+
+/* ---------- Category body (bits) ---------- */
+.gk-cat-body {
+  overflow: hidden;
+  padding: 0 16px 12px 40px;
+}
+
+/* =============================================
+   GK BIT ITEM
+   ============================================= */
+.gk-bit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  transition: background 0.18s ease;
+}
+.gk-bit-item:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.gk-bit-icon {
+  color: var(--accent-2);
+  flex-shrink: 0;
+  margin-top: 3px;
+  filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.2));
+}
+
+.gk-bit-text {
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.gk-bit-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+.gk-bit-item:hover .gk-bit-actions {
+  opacity: 1;
+}
+
+.gk-bit-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.gk-bit-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text);
+}
+.gk-bit-action-btn.save {
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, 0.2);
+}
+.gk-bit-action-btn.save:hover {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.35);
+}
+.gk-bit-action-btn.cancel {
+  color: var(--muted);
+}
+.gk-bit-action-btn.cancel:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+.gk-bit-action-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #f87171;
+}
+
+/* ---------- Bit edit / add row ---------- */
+.gk-bit-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.gk-bit-add-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin-top: 4px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.gk-bit-input {
+  flex: 1;
+  padding: 8px 14px;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 0.93rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.gk-bit-input:focus {
+  border-color: rgba(34, 211, 238, 0.4);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.06);
+}
+.gk-bit-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.add-icon {
+  color: var(--accent);
+}
+
+/* ---------- Empty states ---------- */
+.gk-empty-cat {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.25);
+  padding: 8px 12px;
+  font-style: italic;
+}
+
+.gk-empty-state {
+  text-align: center;
+  padding: 56px 24px;
+  margin-top: 20px;
+}
+.gk-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  filter: grayscale(0.3);
+}
+.gk-empty-title {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.gk-empty-sub {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+/* =============================================
+   SKELETON LOADER
+   ============================================= */
+.gk-skeleton-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px 0;
+}
+.gk-skel-title {
+  width: 280px;
+  height: 32px;
+  border-radius: 10px;
+}
+.gk-skel-subtitle {
+  width: 160px;
+  height: 20px;
+  border-radius: 8px;
+}
+.gk-skel-block {
+  width: 100%;
+  height: 120px;
+  border-radius: 14px;
+}
+.gk-skel-block.short {
+  width: 70%;
+  height: 90px;
+}
+
+/* Reuse shimmer from Diary */
+.gk-skeleton-wrap .skel {
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmerGK 1.6s ease-in-out infinite;
+}
+@keyframes shimmerGK {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* =============================================
+   RESPONSIVE DESIGN
+   ============================================= */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .gk-main {
+    padding: 20px 24px 40px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .gk-main {
+    padding: 60px 16px 32px 16px;
+  }
+
+  .gk-date-title {
+    font-size: 1.2rem;
+  }
+
+  .gk-page-title {
+    font-size: 0.95rem;
+  }
+
+  .gk-cat-header {
+    padding: 12px 12px;
+    gap: 6px;
+  }
+
+  .gk-cat-name {
+    font-size: 0.88rem;
+  }
+
+  .gk-cat-body {
+    padding-left: 28px;
+  }
+
+  .gk-bit-item {
+    padding: 8px 8px;
+    gap: 8px;
+  }
+
+  .gk-bit-text {
+    font-size: 0.83rem;
+  }
+
+  .gk-cat-actions {
+    opacity: 1;
+  }
+
+  .gk-bit-actions {
+    opacity: 1;
+  }
+
+  .gk-add-cat-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .gk-main {
+    padding: 56px 12px 28px 12px;
+  }
+
+  .gk-date-title {
+    font-size: 1.05rem;
+  }
+
+  .gk-cat-header {
+    padding: 10px 10px;
+  }
+
+  .gk-category {
+    border-radius: 12px;
+  }
+
+  .gk-bit-input {
+    font-size: 0.82rem;
+    padding: 7px 12px;
+  }
+
+  .gk-cat-input {
+    font-size: 0.82rem;
+    padding: 8px 12px;
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = [
@@ -8,7 +8,28 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December",
 ];
 
-function CalendarSidebar({ selectedDate, onSelectDate, entriesDates, isOpen, onToggle }) {
+/* Inline SVG Calendar Icon — no external deps */
+const CalendarIcon = ({ size = 18 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="calendar-icon-svg"
+  >
+    <rect x="3" y="4" width="18" height="18" rx="3" />
+    <line x1="16" y1="2" x2="16" y2="6" />
+    <line x1="8" y1="2" x2="8" y2="6" />
+    <line x1="3" y1="10" x2="21" y2="10" />
+    <rect x="7" y="14" width="3" height="3" rx="0.5" fill="currentColor" stroke="none" />
+  </svg>
+);
+
+function CalendarSidebar({ selectedDate, onSelectDate, entriesDates, isOpen, onToggle, streak }) {
   const today = new Date();
   const [viewYear, setViewYear] = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth());
@@ -62,18 +83,48 @@ function CalendarSidebar({ selectedDate, onSelectDate, entriesDates, isOpen, onT
 
   return (
     <>
-      {/* Mobile toggle */}
-      <button className="calendar-mobile-toggle" onClick={onToggle} aria-label="Toggle calendar">
-        <Calendar size={20} />
-        <span>{MONTHS[viewMonth].slice(0, 3)} {viewYear}</span>
+      {/* Mobile floating toggle — inline SVG calendar icon */}
+      <button
+        className={`calendar-mobile-toggle ${isOpen ? "toggle-active" : ""}`}
+        onClick={onToggle}
+        aria-label="Toggle calendar"
+      >
+        <CalendarIcon size={18} />
+        <span>Calendar</span>
       </button>
 
-      <motion.aside
+      {/* Mobile backdrop overlay via AnimatePresence */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="calendar-overlay"
+            onClick={onToggle}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          />
+        )}
+      </AnimatePresence>
+
+      <aside
         className={`calendar-sidebar ${isOpen ? "open" : ""}`}
-        initial={{ x: -40, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.45, ease: "easeOut" }}
       >
+        {/* Streak counter */}
+        {streak > 0 && (
+          <motion.div
+            className="streak-counter"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <span className="streak-flame">🔥</span>
+            <span className="streak-text">
+              <strong>{streak}</strong> day{streak !== 1 ? "s" : ""} streak
+            </span>
+          </motion.div>
+        )}
+
         <div className="calendar-header">
           <button className="cal-nav-btn" onClick={() => goMonth(-1)} aria-label="Previous month">
             <ChevronLeft size={18} />
@@ -149,9 +200,12 @@ function CalendarSidebar({ selectedDate, onSelectDate, entriesDates, isOpen, onT
           Today
         </button>
 
-        {/* Sidebar overlay for mobile */}
-        {isOpen && <div className="calendar-overlay" onClick={onToggle} />}
-      </motion.aside>
+        {/* Sidebar stats */}
+        <div className="sidebar-stats">
+          <span className="sidebar-stat-label">Total entries</span>
+          <span className="sidebar-stat-value">{entriesDates.size}</span>
+        </div>
+      </aside>
     </>
   );
 }

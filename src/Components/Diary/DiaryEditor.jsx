@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Save, Trash2, Eraser, Loader2 } from "lucide-react";
 
@@ -8,7 +8,15 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December",
 ];
 
-function DiaryEditor({ selectedDate, content, onChange, onSave, onClear, onDelete, isSaving }) {
+const MOODS = [
+  { emoji: "😊", label: "Happy" },
+  { emoji: "😌", label: "Calm" },
+  { emoji: "🤔", label: "Thoughtful" },
+  { emoji: "😔", label: "Sad" },
+  { emoji: "🔥", label: "Energized" },
+];
+
+function DiaryEditor({ selectedDate, content, onChange, onSave, onClear, onDelete, isSaving, mood, onMoodChange, showSaveSuccess, isTyping }) {
   const textareaRef = useRef(null);
   const [focused, setFocused] = useState(false);
 
@@ -29,9 +37,23 @@ function DiaryEditor({ selectedDate, content, onChange, onSave, onClear, onDelet
     }
   }, [content]);
 
-  // Word count
+  // Word count, char count, reading time
   const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
   const charCount = content.length;
+  const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
+  // Keyboard shortcut (Ctrl/Cmd + S)
+  const handleKeyDown = useCallback((e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+      e.preventDefault();
+      onSave();
+    }
+  }, [onSave]);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
 
   return (
     <motion.section
@@ -69,11 +91,33 @@ function DiaryEditor({ selectedDate, content, onChange, onSave, onClear, onDelet
           <span>{wordCount} words</span>
           <span className="meta-dot">·</span>
           <span>{charCount} chars</span>
+          <span className="meta-dot">·</span>
+          <span>{readingTime} min read</span>
+        </div>
+      </div>
+
+      {/* Mood picker */}
+      <div className="mood-picker">
+        <span className="mood-label">How are you feeling?</span>
+        <div className="mood-options">
+          {MOODS.map((m) => (
+            <motion.button
+              key={m.emoji}
+              className={`mood-btn ${mood === m.emoji ? "mood-active" : ""}`}
+              onClick={() => onMoodChange(mood === m.emoji ? "" : m.emoji)}
+              whileTap={{ scale: 0.85 }}
+              whileHover={{ scale: 1.15, y: -2 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              title={m.label}
+            >
+              <span className="mood-emoji">{m.emoji}</span>
+            </motion.button>
+          ))}
         </div>
       </div>
 
       {/* Textarea */}
-      <div className={`editor-textarea-wrap ${focused ? "focused" : ""}`}>
+      <div className={`editor-textarea-wrap ${focused ? "focused" : ""} ${isTyping ? "typing" : ""}`}>
         <textarea
           ref={textareaRef}
           className="editor-textarea"
@@ -84,6 +128,23 @@ function DiaryEditor({ selectedDate, content, onChange, onSave, onClear, onDelet
           onBlur={() => setFocused(false)}
           spellCheck
         />
+        {/* Keyboard shortcut hint */}
+        <AnimatePresence>
+          {focused && !content && (
+            <motion.div
+              className="shortcut-hint"
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 4 }}
+              transition={{ delay: 0.6, duration: 0.3 }}
+            >
+              <kbd>{navigator.platform.includes("Mac") ? "⌘" : "Ctrl"}</kbd>
+              <span>+</span>
+              <kbd>S</kbd>
+              <span className="shortcut-hint-text">to save</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Action buttons */}
@@ -132,17 +193,53 @@ function DiaryEditor({ selectedDate, content, onChange, onSave, onClear, onDelet
         </motion.button>
       </div>
 
-      {/* Auto-save indicator */}
+      {/* Save success floating checkmark */}
+      <AnimatePresence>
+        {showSaveSuccess && (
+          <motion.div
+            className="save-success-overlay"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+          >
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" className="save-check-svg">
+              <motion.circle
+                cx="24" cy="24" r="22"
+                stroke="var(--accent)"
+                strokeWidth="2"
+                fill="rgba(249, 115, 22, 0.08)"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.4 }}
+              />
+              <motion.path
+                d="M14 24l7 7 13-13"
+                stroke="var(--accent)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+              />
+            </svg>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Auto-save indicator — typing-aware */}
       <AnimatePresence>
         {content && !isSaving && (
           <motion.div
-            className="autosave-indicator"
+            className={`autosave-indicator ${isTyping ? "typing-active" : ""}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <span className="autosave-dot" />
-            Auto-saved
+            <span className={`autosave-dot ${isTyping ? "dot-typing" : ""}`} />
+            {isTyping ? "Typing..." : "Auto-saved"}
           </motion.div>
         )}
       </AnimatePresence>

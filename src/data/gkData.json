@@ -1,0 +1,137 @@
+{
+  "2026-03-09": {
+    "categories": [
+      {
+        "id": "cat-1",
+        "name": "Sports",
+        "icon": "trophy",
+        "bits": [
+          { "id": "bit-1", "text": "India won the ICC Champions Trophy 2025 by defeating New Zealand in the final." },
+          { "id": "bit-2", "text": "Neeraj Chopra set a new national record in javelin throw with 90.18m." },
+          { "id": "bit-3", "text": "IPL 2026 auction saw the highest-ever bid of ₹28 crore for a player." }
+        ]
+      },
+      {
+        "id": "cat-2",
+        "name": "Politics",
+        "icon": "landmark",
+        "bits": [
+          { "id": "bit-4", "text": "India's Union Budget 2026-27 introduced zero income tax up to ₹12 lakh." },
+          { "id": "bit-5", "text": "G20 summit 2026 to be hosted by South Africa in Johannesburg." }
+        ]
+      },
+      {
+        "id": "cat-3",
+        "name": "Science",
+        "icon": "atom",
+        "bits": [
+          { "id": "bit-6", "text": "ISRO successfully launched Chandrayaan-4 lunar sample return mission." },
+          { "id": "bit-7", "text": "NASA's Artemis III mission scheduled for late 2026." },
+          { "id": "bit-8", "text": "India's first quantum computing chip developed by IIT Madras researchers." }
+        ]
+      },
+      {
+        "id": "cat-4",
+        "name": "Technology",
+        "icon": "cpu",
+        "bits": [
+          { "id": "bit-9", "text": "India launched its own semiconductor fabrication plant in Gujarat." },
+          { "id": "bit-10", "text": "OpenAI released GPT-5 with multimodal reasoning capabilities." }
+        ]
+      }
+    ]
+  },
+  "2026-03-08": {
+    "categories": [
+      {
+        "id": "cat-5",
+        "name": "Economy",
+        "icon": "trending-up",
+        "bits": [
+          { "id": "bit-11", "text": "India's GDP growth rate projected at 7.2% for FY 2026-27." },
+          { "id": "bit-12", "text": "Sensex crossed 95,000 mark for the first time." },
+          { "id": "bit-13", "text": "RBI kept repo rate unchanged at 6.25% in the latest monetary policy review." }
+        ]
+      },
+      {
+        "id": "cat-6",
+        "name": "Environment",
+        "icon": "leaf",
+        "bits": [
+          { "id": "bit-14", "text": "Delhi AQI crossed 450, schools shut for 3 days." },
+          { "id": "bit-15", "text": "India pledged to achieve net-zero carbon emissions by 2070 at COP31." }
+        ]
+      },
+      {
+        "id": "cat-7",
+        "name": "International Affairs",
+        "icon": "globe",
+        "bits": [
+          { "id": "bit-16", "text": "India became a permanent member of the UN Security Council reform committee." },
+          { "id": "bit-17", "text": "EU passed the AI Act — world's first comprehensive AI regulation." }
+        ]
+      }
+    ]
+  },
+  "2026-03-06": {
+    "categories": [
+      {
+        "id": "cat-8",
+        "name": "Sports",
+        "icon": "trophy",
+        "bits": [
+          { "id": "bit-18", "text": "FIFA announced the 2030 World Cup to be hosted across six countries." },
+          { "id": "bit-19", "text": "PV Sindhu won gold at the All England Open Badminton Championships." }
+        ]
+      },
+      {
+        "id": "cat-9",
+        "name": "Science",
+        "icon": "atom",
+        "bits": [
+          { "id": "bit-20", "text": "Scientists discovered high-temperature superconductor at room pressure." },
+          { "id": "bit-21", "text": "India's LIGO detector in Maharashtra detected gravitational waves independently." }
+        ]
+      },
+      {
+        "id": "cat-10",
+        "name": "Politics",
+        "icon": "landmark",
+        "bits": [
+          { "id": "bit-22", "text": "One Nation One Election bill introduced in Parliament." },
+          { "id": "bit-23", "text": "India signed free trade agreement with the European Union." }
+        ]
+      }
+    ]
+  },
+  "2026-03-02": {
+    "categories": [
+      {
+        "id": "cat-11",
+        "name": "Technology",
+        "icon": "cpu",
+        "bits": [
+          { "id": "bit-24", "text": "Apple announced the Vision Pro 2 with neural interface support." },
+          { "id": "bit-25", "text": "India's UPI processed 20 billion transactions in February 2026." }
+        ]
+      },
+      {
+        "id": "cat-12",
+        "name": "Economy",
+        "icon": "trending-up",
+        "bits": [
+          { "id": "bit-26", "text": "India surpassed Japan to become the 4th largest economy by GDP." },
+          { "id": "bit-27", "text": "Rupee strengthened to ₹82.5 against USD after FDI inflow surge." }
+        ]
+      },
+      {
+        "id": "cat-13",
+        "name": "Environment",
+        "icon": "leaf",
+        "bits": [
+          { "id": "bit-28", "text": "India's green hydrogen production reached 1 million tonnes annually." }
+        ]
+      }
+    ]
+  }
+}
