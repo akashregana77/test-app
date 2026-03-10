@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding-top: 64px;
   background:
     radial-gradient(120% 120% at 10% 20%, rgba(124, 58, 237, 0.08), transparent 40%),
     radial-gradient(100% 100% at 90% 80%, rgba(34, 211, 238, 0.06), transparent 35%),
@@ -18,6 +19,7 @@
 .story-layout {
   display: flex;
   flex: 1;
+  height: calc(100vh - 64px);
   overflow: hidden;
   position: relative;
 }
@@ -28,6 +30,9 @@
 .story-sidebar {
   width: 280px;
   min-width: 280px;
+  height: 100%;
+  position: sticky;
+  top: 0;
   border-right: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(17, 24, 39, 0.6);
   backdrop-filter: blur(20px);
@@ -84,7 +89,7 @@
   border-radius: 6px;
   color: var(--muted);
   cursor: pointer;
-  padding: 4px;
+  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -476,14 +481,14 @@
 .story-quick-actions button {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
+  gap: 7px;
+  padding: 10px 20px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
+  border-radius: 12px;
   color: var(--muted);
   font-family: inherit;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -498,6 +503,113 @@
 
 .story-quick-actions button:active {
   transform: scale(0.96);
+}
+
+/* =============================================
+   DELETE CONFIRMATION MODAL
+   ============================================= */
+.story-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 20px;
+}
+
+.story-confirm-card {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(17, 24, 39, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 28px;
+  text-align: center;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.story-confirm-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  margin-bottom: 14px;
+}
+
+.story-confirm-title {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.story-confirm-message {
+  margin: 0 0 22px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.story-confirm-message strong {
+  color: var(--text);
+}
+
+.story-confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.story-confirm-cancel {
+  padding: 9px 22px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.story-confirm-cancel:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.story-confirm-delete {
+  padding: 9px 22px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 12px rgba(239, 68, 68, 0.3);
+}
+
+.story-confirm-delete:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.45);
+}
+
+.story-confirm-delete:active {
+  transform: scale(0.97);
 }
 
 /* =============================================

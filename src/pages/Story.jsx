@@ -8,6 +8,7 @@ import {
   FilePlus,
   X,
   Check,
+  AlertTriangle,
 } from "lucide-react";
 import Navbar from "../Components/Navbar/Navbar";
 import StorySidebar from "../Components/Story/StorySidebar";
@@ -52,6 +53,10 @@ function Story() {
   const [namePrompt, setNamePrompt] = useState(null);
   const [nameValue, setNameValue] = useState("");
   const nameInputRef = useRef(null);
+
+  /* confirmDelete drives the delete-confirmation modal.
+     shape: { type: "book"|"chapter"|"page", bookId, chapterId?, pageId?, label } or null */
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
   /* Auto-focus the input whenever prompt opens */
   useEffect(() => {
@@ -260,41 +265,148 @@ function Story() {
   /* ── Delete Page ──────────────────────── */
   const handleDeletePage = useCallback(
     (bookId, chapterId, pageId) => {
-      setBooks((prev) =>
-        prev.map((book) => {
-          if (book.id !== bookId) return book;
-          return {
-            ...book,
-            chapters: book.chapters.map((ch) => {
-              if (ch.id !== chapterId) return ch;
-              if (ch.pages.length <= 1) return ch;
-              const newPages = ch.pages.filter((p) => p.id !== pageId);
-              return { ...ch, pages: newPages };
-            }),
-          };
-        })
-      );
+      setBooks((prev) => {
+        const book = prev.find((b) => b.id === bookId);
+        const chapter = book?.chapters.find((c) => c.id === chapterId);
+        if (!chapter) return prev;
 
-      if (pageId === activePageId) {
-        const chapter = activeBook?.chapters.find(
-          (c) => c.id === chapterId
+        // Last page → replace with a fresh blank page instead of removing
+        if (chapter.pages.length <= 1) {
+          const freshPageId = uid();
+          setActivePageId(freshPageId);
+          return prev.map((b) =>
+            b.id !== bookId
+              ? b
+              : {
+                  ...b,
+                  chapters: b.chapters.map((ch) =>
+                    ch.id !== chapterId
+                      ? ch
+                      : { ...ch, pages: [{ id: freshPageId, title: "Page 1", content: "" }] }
+                  ),
+                }
+          );
+        }
+
+        // Normal case — remove the page
+        const newPages = chapter.pages.filter((p) => p.id !== pageId);
+        if (pageId === activePageId) {
+          setActivePageId(newPages[0]?.id);
+        }
+        return prev.map((b) =>
+          b.id !== bookId
+            ? b
+            : {
+                ...b,
+                chapters: b.chapters.map((ch) =>
+                  ch.id !== chapterId ? ch : { ...ch, pages: newPages }
+                ),
+              }
         );
-        if (chapter) {
-          const remaining = chapter.pages.filter((p) => p.id !== pageId);
-          if (remaining.length > 0) {
-            setActivePageId(remaining[0].id);
+      });
+    },
+    [activePageId]
+  );
+
+  /* ── Request delete (shows confirmation modal) ── */
+  const requestDeleteBook = useCallback(
+    (bookId) => {
+      const book = books.find((b) => b.id === bookId);
+      if (!book) return;
+      setConfirmDelete({ type: "book", bookId, label: book.title });
+    },
+    [books]
+  );
+
+  const requestDeleteChapter = useCallback(
+    (bookId, chapterId) => {
+      const book = books.find((b) => b.id === bookId);
+      const chapter = book?.chapters.find((c) => c.id === chapterId);
+      if (!chapter) return;
+      setConfirmDelete({ type: "chapter", bookId, chapterId, label: chapter.title });
+    },
+    [books]
+  );
+
+  const requestDeletePage = useCallback(
+    (bookId, chapterId, pageId) => {
+      const book = books.find((b) => b.id === bookId);
+      const chapter = book?.chapters.find((c) => c.id === chapterId);
+      const page = chapter?.pages.find((p) => p.id === pageId);
+      if (!page) return;
+      setConfirmDelete({ type: "page", bookId, chapterId, pageId, label: page.title });
+    },
+    [books]
+  );
+
+  /* ── Confirm deletion ─────────────────── */
+  const executeDelete = useCallback(() => {
+    if (!confirmDelete) return;
+    const { type, bookId, chapterId, pageId } = confirmDelete;
+
+    if (type === "book") {
+      setBooks((prev) => {
+        const newBooks = prev.filter((b) => b.id !== bookId);
+        if (bookId === activeBookId) {
+          if (newBooks.length > 0) {
+            const fallback = newBooks[0];
+            setActiveBookId(fallback.id);
+            setActiveChapterId(fallback.chapters[0]?.id);
+            setActivePageId(fallback.chapters[0]?.pages[0]?.id);
+          } else {
+            setActiveBookId(null);
+            setActiveChapterId(null);
+            setActivePageId(null);
           }
         }
-      }
-    },
-    [activePageId, activeBook]
-  );
+        return newBooks;
+      });
+    } else if (type === "chapter") {
+      setBooks((prev) => {
+        const book = prev.find((b) => b.id === bookId);
+        if (!book) return prev;
+
+        // Last chapter → replace with a fresh default chapter
+        if (book.chapters.length <= 1) {
+          const freshChId = uid();
+          const freshPgId = uid();
+          setActiveChapterId(freshChId);
+          setActivePageId(freshPgId);
+          return prev.map((b) =>
+            b.id !== bookId
+              ? b
+              : {
+                  ...b,
+                  chapters: [
+                    { id: freshChId, title: "Chapter 1", pages: [{ id: freshPgId, title: "Page 1", content: "" }] },
+                  ],
+                }
+          );
+        }
+
+        const newChapters = book.chapters.filter((c) => c.id !== chapterId);
+        if (chapterId === activeChapterId && newChapters.length > 0) {
+          setActiveChapterId(newChapters[0].id);
+          setActivePageId(newChapters[0].pages[0]?.id);
+        }
+        return prev.map((b) =>
+          b.id === bookId ? { ...b, chapters: newChapters } : b
+        );
+      });
+    } else if (type === "page") {
+      handleDeletePage(bookId, chapterId, pageId);
+    }
+
+    setConfirmDelete(null);
+  }, [confirmDelete, activeBookId, activeChapterId, handleDeletePage]);
 
   /* ── Close sidebar / dismiss prompt on Escape ── */
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === "Escape") {
-        if (namePrompt) {
+        if (confirmDelete) {
+          setConfirmDelete(null);
+        } else if (namePrompt) {
           setNamePrompt(null);
           setNameValue("");
         } else {
@@ -309,6 +421,66 @@ function Story() {
   return (
     <div className="story-page">
       <Navbar />
+
+      {/* ── Delete confirmation modal ── */}
+      <AnimatePresence>
+        {confirmDelete && (
+          <motion.div
+            className="story-confirm-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setConfirmDelete(null)}
+          >
+            <motion.div
+              className="story-confirm-card"
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="story-confirm-icon">
+                <AlertTriangle size={28} />
+              </div>
+              <h3 className="story-confirm-title">
+                Delete{" "}
+                {confirmDelete.type === "book"
+                  ? "Book"
+                  : confirmDelete.type === "chapter"
+                  ? "Chapter"
+                  : "Page"}
+                ?
+              </h3>
+              <p className="story-confirm-message">
+                Are you sure you want to delete{" "}
+                <strong>&ldquo;{confirmDelete.label}&rdquo;</strong>
+                {confirmDelete.type === "book"
+                  ? " and all its chapters and pages"
+                  : confirmDelete.type === "chapter"
+                  ? " and all its pages"
+                  : ""}
+                ? This action cannot be undone.
+              </p>
+              <div className="story-confirm-actions">
+                <button
+                  className="story-confirm-cancel"
+                  onClick={() => setConfirmDelete(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="story-confirm-delete"
+                  onClick={executeDelete}
+                >
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Animated name prompt overlay ── */}
       <AnimatePresence>
@@ -445,7 +617,9 @@ function Story() {
             onAddBook={handleAddBook}
             onAddChapter={handleAddChapter}
             onAddPage={handleAddPage}
-            onDeletePage={handleDeletePage}
+            onDeletePage={requestDeletePage}
+            onDeleteBook={requestDeleteBook}
+            onDeleteChapter={requestDeleteChapter}
             onRenameBook={handleRenameBook}
             onRenameChapter={handleRenameChapter}
           />
@@ -476,14 +650,14 @@ function Story() {
           {/* Quick action bar */}
           <div className="story-quick-actions">
             <button onClick={handleAddBook} title="New Book">
-              <BookPlus size={16} />
+              <BookPlus size={20} />
               <span>Book</span>
             </button>
             <button
               onClick={() => handleAddChapter(activeBookId)}
               title="New Chapter"
             >
-              <FolderPlus size={16} />
+              <FolderPlus size={20} />
               <span>Chapter</span>
             </button>
             <button
@@ -492,7 +666,7 @@ function Story() {
               }
               title="New Page"
             >
-              <FilePlus size={16} />
+              <FilePlus size={20} />
               <span>Page</span>
             </button>
           </div>

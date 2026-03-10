@@ -21,6 +21,8 @@ const StorySidebar = ({
   onAddChapter,
   onAddPage,
   onDeletePage,
+  onDeleteBook,
+  onDeleteChapter,
   onRenameBook,
   onRenameChapter,
 }) => {
@@ -40,7 +42,7 @@ const StorySidebar = ({
   }, [editing]);
 
   const toggleExpand = (id) => {
-    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+    setExpanded((prev) => ({ ...prev, [id]: prev[id] === undefined ? false : !prev[id] }));
   };
 
   const startEditBook = (book) => {
@@ -94,7 +96,7 @@ const StorySidebar = ({
           title="New Book"
           aria-label="Add new book"
         >
-          <Plus size={15} />
+          <Plus size={18} />
         </button>
       </div>
 
@@ -163,7 +165,26 @@ const StorySidebar = ({
                     }
                   }}
                 >
-                  <Plus size={13} />
+                  <Plus size={16} />
+                </span>
+                <span
+                  className="story-tree-action danger"
+                  role="button"
+                  tabIndex={0}
+                  title="Delete Book"
+                  aria-label={`Delete ${book.title}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDeleteBook(book.id);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.stopPropagation();
+                      onDeleteBook(book.id);
+                    }
+                  }}
+                >
+                  <Trash2 size={14} />
                 </span>
               </button>
 
@@ -252,7 +273,26 @@ const StorySidebar = ({
                                 }
                               }}
                             >
-                              <Plus size={12} />
+                              <Plus size={15} />
+                            </span>
+                            <span
+                              className="story-tree-action danger"
+                              role="button"
+                              tabIndex={0}
+                              title="Delete Chapter"
+                              aria-label={`Delete ${chapter.title}`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onDeleteChapter(book.id, chapter.id);
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.stopPropagation();
+                                  onDeleteChapter(book.id, chapter.id);
+                                }
+                              }}
+                            >
+                              <Trash2 size={13} />
                             </span>
                           </button>
 

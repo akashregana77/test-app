@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Index from './pages/index.jsx';
 import About from './pages/About.jsx';
 import Notes from './pages/Notes.jsx';
-import CursorTail from './CursorTail.jsx';
+// import CursorTail from './CursorTail.jsx';
 import Diary from './pages/Diary.jsx';
 import Story from './pages/Story.jsx';
 import GKBits from './pages/GKBits.jsx';
@@ -12,7 +12,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <CursorTail />
+        {/* <CursorTail /> */}
         <Routes>
           <Route path='/' element={<Index />} />
           <Route path='/about' element={<About />} />
